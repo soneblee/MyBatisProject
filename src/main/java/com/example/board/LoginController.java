@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 
 @Controller
-//@RequestMapping(value="/login")
+@RequestMapping(value="/login")
 public class LoginController {
     @Autowired
     UserServiceImpl service;
@@ -16,7 +16,7 @@ public class LoginController {
     public String login() {
         return "login";
     }
-    @RequestMapping(value = "/login/loginOk", method = RequestMethod.POST)
+    @RequestMapping(value = "/login/loginok", method = RequestMethod.POST)
     public String loginCheck(HttpSession session, UserVO vo) {
         String returnURL = "";
         if (session.getAttribute("login") != null) {

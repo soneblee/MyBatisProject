@@ -9,7 +9,7 @@
 <html>
 </head>
 <body>
-<form method="post" action="loginOk" class="login-form">
+<form method="post" action="loginok" class="login-form">
     <div><label>User ID :</label><input type="text" name="userid"></div>
     <div><label>User password :</label>
         <input type="password" name="password"></div>

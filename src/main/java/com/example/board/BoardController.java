@@ -7,25 +7,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
 @Controller
-@RequestMapping(value="/board")
 public class BoardController {
+
     @Autowired
     BoardServiceImpl boardServiceImpl;
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String boardlist(Model model){
+
+    @RequestMapping( "/board/list")
+    public String boardList(Model model) {
         model.addAttribute("list", boardServiceImpl.getBoardList());
         return "list";
     }
 
-    @RequestMapping(value="/add", method = RequestMethod.GET)
-    public String addPost(){
+    @RequestMapping(value = "board/addpostform", method = RequestMethod.GET)
+    public String addPost() {
         return "addpostform";
     }
 
-    @RequestMapping(value = "/addok", method = RequestMethod.POST)
-    public String addPostOK(BoardVO vo) {
+    @RequestMapping(value = "board/addok", method = RequestMethod.POST)
+    public String addPostok(BoardVO vo) {
         int i = boardServiceImpl.insertBoard(vo);
         if(i == 0)
             System.out.println("데이터 추가 실패");
@@ -34,14 +34,15 @@ public class BoardController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "/editform/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "board/editform/{id}", method = RequestMethod.GET)
     public String editPost(@PathVariable("id") int id, Model model) {
         BoardVO boardVO = boardServiceImpl.getBoard(id);
         model.addAttribute("u", boardVO);
         return "editform";
     }
+
     @RequestMapping(value = "board/editok", method = RequestMethod.POST)
-    public String editPostOK(BoardVO vo) {
+    public String editPostok(BoardVO vo) {
         int i = boardServiceImpl.updateBoard(vo);
         if(i == 0)
             System.out.println("데이터 수정 실패");
@@ -50,19 +51,19 @@ public class BoardController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "/deleteok/{id}", method = RequestMethod.GET)
-    public String deletePostOK(@PathVariable("id") int id){
+    @RequestMapping(value = "/board/deleteok/{id}", method = RequestMethod.GET)
+    public  String deletePostok(@PathVariable("id") int id) {
         if(boardServiceImpl.deleteBoard(id) == 0)
             System.out.println("데이터 삭제 실패");
         else
             System.out.println("데이터 삭제 성공!!!");
-        return "redirect:/board/list";
+        return "redirect:../list";
     }
+
     @RequestMapping(value = "board/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable("id") int id, Model model) {
         BoardVO boardVO = boardServiceImpl.getBoard(id);
         model.addAttribute("list", boardVO);
         return "view";
     }
-
 }
