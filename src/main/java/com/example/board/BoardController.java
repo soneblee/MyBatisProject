@@ -12,10 +12,10 @@ import java.util.List;
 @RequestMapping(value="/board")
 public class BoardController {
     @Autowired
-    BoardServiceImpl boardService;
+    BoardServiceImpl boardServiceImpl;
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String boardlist(Model model){
-        model.addAttribute("list", boardService.getBoardList());
+        model.addAttribute("list", boardServiceImpl.getBoardList());
         return "list";
     }
 
@@ -25,8 +25,9 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/addok", method = RequestMethod.POST)
-    public String addPostOK(BoardVO vo){
-        if(boardService.insertBoard(vo) == 0)
+    public String addPostOK(BoardVO vo) {
+        int i = boardServiceImpl.insertBoard(vo);
+        if(i == 0)
             System.out.println("데이터 추가 실패");
         else
             System.out.println("데이터 추가 성공!!!");
@@ -34,15 +35,15 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/editform/{id}", method = RequestMethod.GET)
-    public String editPost(@PathVariable("id") int id, Model model){
-        BoardVO boardVO = boardService.getBoard(id);
+    public String editPost(@PathVariable("id") int id, Model model) {
+        BoardVO boardVO = boardServiceImpl.getBoard(id);
         model.addAttribute("u", boardVO);
         return "editform";
     }
-
-    @RequestMapping(value = "/editok", method = RequestMethod.POST)
-    public String editPostOK(BoardVO vo){
-        if(boardService.updateBoard(vo) == 0)
+    @RequestMapping(value = "board/editok", method = RequestMethod.POST)
+    public String editPostOK(BoardVO vo) {
+        int i = boardServiceImpl.updateBoard(vo);
+        if(i == 0)
             System.out.println("데이터 수정 실패");
         else
             System.out.println("데이터 수정 성공!!!");
@@ -51,11 +52,17 @@ public class BoardController {
 
     @RequestMapping(value = "/deleteok/{id}", method = RequestMethod.GET)
     public String deletePostOK(@PathVariable("id") int id){
-        if(boardService.deleteBoard(id) == 0)
+        if(boardServiceImpl.deleteBoard(id) == 0)
             System.out.println("데이터 삭제 실패");
         else
             System.out.println("데이터 삭제 성공!!!");
         return "redirect:/board/list";
+    }
+    @RequestMapping(value = "board/view/{id}", method = RequestMethod.GET)
+    public String view(@PathVariable("id") int id, Model model) {
+        BoardVO boardVO = boardServiceImpl.getBoard(id);
+        model.addAttribute("list", boardVO);
+        return "view";
     }
 
 }

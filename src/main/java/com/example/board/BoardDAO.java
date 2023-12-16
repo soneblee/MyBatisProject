@@ -13,52 +13,32 @@ import java.util.List;
 
 @Repository
 public class BoardDAO {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+
     @Autowired
     SqlSession sqlSession;
 
-    public int insertBoard(BoardVO vo){
+    public BoardVO getBoard(int seq) {
+        BoardVO one = sqlSession.selectOne("Board.getBoard", seq);
+        return one;
+    }
+
+    public List<BoardVO> getBoardList() {
+        List<BoardVO> list = sqlSession.selectList("Board.getBoardList");
+        return list;
+    }
+
+    public int insertBoard(BoardVO vo) {
         int result = sqlSession.insert("Board.insertBoard", vo);
         return result;
-   }
-   /*  public int insertBoard(BoardVO vo){
-         String sql = "insert into BOARD(title, writer, content) values ("
-                 + "'" + vo.getTitle() + "',"
-                 + "'" + vo.getWriter() + "',"
-                 + "'" + vo.getContent() + "')";
-         return jdbcTemplate.update(sql);
-     }
- */
-    public int deleteBoard(int seq){
-        String sql = "delete from BOARD where seq = " + seq;
-        return jdbcTemplate.update(sql);
     }
 
-    public int updateBoard(BoardVO vo){
-        String sql = "update BOARD set title = '" + vo.getTitle() + "',"
-                + " writer='" + vo.getWriter() + "',"
-                + " content='" + vo.getContent() + "' where seq=" + vo.getSeq();
-        return jdbcTemplate.update(sql);
+    public int updateBoard(BoardVO vo) {
+        int one = sqlSession.update("Board.updateBoard", vo);
+        return one;
     }
 
-    class BoardRowMapper implements RowMapper<BoardVO>{
-        @Override
-        public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException{
-            BoardVO vo = new BoardVO();
-            vo.setSeq(rs.getInt("seq"));
-            vo.setTitle(rs.getString("title"));
-            vo.setContent(rs.getString("content"));
-            vo.setWriter(rs.getString("writer"));
-            return vo;
-        }
-    }
-    public BoardVO getBoard(int seq){
-        String sql = "select * from BOARD where seq=" + seq;
-        return jdbcTemplate.queryForObject(sql, new BoardRowMapper());
-    }
-    public List <BoardVO> getBoardList(){
-        String sql = "select * from BOARD order by seq desc";
-        return jdbcTemplate.query(sql, new BoardRowMapper());
+    public int deleteBoard(int id) {
+        int result = sqlSession.delete("Board.deleteBoard", id);
+        return result;
     }
 }
