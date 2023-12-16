@@ -11,9 +11,6 @@ public class BoardVO {
     private Date regdate;
     private int cnt;
 
-    public BoardVO() {
-    }
-
     public int getSeq() {
         return seq;
     }
