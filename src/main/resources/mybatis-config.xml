@@ -5,20 +5,6 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="board" type="com.example.board.BoardVO"/>
+        <typeAlias alias="user" type="com.example.board.UserVO"/>
     </typeAliases>
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <property name="driver" value="org.mariadb.jdbc.Driver"/>
-                <property name="url" value="$jdbc:mysql://localhost:3306/p233_22200564"/>
-                <property name="username" value="p233_22200564"/>
-                <property name="password" value="Meer5i"/>
-            </dataSource>
-        </environment>
-    </environments>
-    <mappers>
-        <mapper resource="classpath:mappers/*-mapper.xml"/>
-        <mapper resource="classpath:mybatis-config.xml"/>
-    </mappers>
 </configuration>
