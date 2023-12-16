@@ -66,4 +66,5 @@ public class BoardController {
         model.addAttribute("list", boardVO);
         return "view";
     }
+
 }
