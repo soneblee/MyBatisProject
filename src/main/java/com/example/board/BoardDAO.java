@@ -21,15 +21,15 @@ public class BoardDAO {
     public int insertBoard(BoardVO vo){
         int result = sqlSession.insert("Board.insertBoard", vo);
         return result;
-   /* }
-    public int insertBoard(BoardVO vo){
-        String sql = "insert into BOARD(title, writer, content) values ("
-                + "'" + vo.getTitle() + "',"
-                + "'" + vo.getWriter() + "',"
-                + "'" + vo.getContent() + "')";
-        return jdbcTemplate.update(sql);
-    }
-*/
+   }
+   /*  public int insertBoard(BoardVO vo){
+         String sql = "insert into BOARD(title, writer, content) values ("
+                 + "'" + vo.getTitle() + "',"
+                 + "'" + vo.getWriter() + "',"
+                 + "'" + vo.getContent() + "')";
+         return jdbcTemplate.update(sql);
+     }
+ */
     public int deleteBoard(int seq){
         String sql = "delete from BOARD where seq = " + seq;
         return jdbcTemplate.update(sql);
