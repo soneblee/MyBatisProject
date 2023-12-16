@@ -1,5 +1,6 @@
 package com.example.board;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,7 +15,13 @@ import java.util.List;
 public class BoardDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    SqlSession sqlSession;
 
+    public int insertBoard(BoardVO vo){
+        int result = sqlSession.insert("Board.insertBoard", vo);
+        return result;
+   /* }
     public int insertBoard(BoardVO vo){
         String sql = "insert into BOARD(title, writer, content) values ("
                 + "'" + vo.getTitle() + "',"
@@ -22,7 +29,7 @@ public class BoardDAO {
                 + "'" + vo.getContent() + "')";
         return jdbcTemplate.update(sql);
     }
-
+*/
     public int deleteBoard(int seq){
         String sql = "delete from BOARD where seq = " + seq;
         return jdbcTemplate.update(sql);
